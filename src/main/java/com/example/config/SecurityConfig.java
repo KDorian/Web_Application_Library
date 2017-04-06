@@ -15,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final int PASSWORD_STRENGHT = 10;
 	
 	@Autowired
-	private UserService userSerice;
+	private UserService userService;
 	
 	//konfiguracja autoryzacji
 	@Override
