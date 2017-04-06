@@ -39,10 +39,34 @@ public class BookController {
 		return "book-create";  //przekierowanie na strone "book-create.jsp"
 	}
 	
+	@RequestMapping(value="/book/save", method = RequestMethod.POST)
+	 public String postCreateBook(@ModelAttribute @Valid Book book, BindingResult result ) {
+	 if(result.hasErrors()) {
+	 			return "book-create";
+	 		}
+	 		
+	 		bookService.save(book);
+	 		
+	 		return "redirect:/books";
+	 	}
 	
 	//getBooksPage - przekierowuje na strone z lista wszystkich ksiazek (books.jsp)
 	//(ustawic odpowiednio model)
 	
 
+	@RequestMapping(value="/books", method = RequestMethod.GET)
+	 	public String getBooksPage(Model model) {
+	 		List<Book> bookList = bookService.findAll();
+	 		model.addAttribute("bookList", bookList);
+	 		
+	 		return "books";  
+	 	}
+	 	
+	 	@RequestMapping(value="/book/delete/{id}", method = RequestMethod.DELETE)
+	 	public String postDeleteBook(@PathVariable Long id)
+	 	{
+	 		bookService.delete(id);
+	 		return "redirect:/books";
+	 	}
 	
 }
