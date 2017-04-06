@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "books")
-class Book extends BaseEntity{
+public class Book extends BaseEntity{
 	
 //	@Column(name="title")
 	@NotNull
