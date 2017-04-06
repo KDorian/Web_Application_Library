@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.ak.scheduler.AdvService;
+
 @Configuration
 @ComponentScan(basePackages = "com.example")
 @EnableWebMvc
@@ -50,5 +52,8 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		return mailSender;
 	}
 	
-	
+	@Bean
+	public AdvService getAdvService() {
+		return new AdvService();
+	}
 }

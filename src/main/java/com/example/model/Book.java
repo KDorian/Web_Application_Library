@@ -25,6 +25,10 @@ public class Book extends BaseEntity{
 	public Book() {
 		
 	}
+	
+	public void decrementAvailable() {
+		available--;
+	}
 
 	public String getTitle() {
 		return title;

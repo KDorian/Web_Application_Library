@@ -26,45 +26,46 @@ public class HibernateConfig {
 	private Environment environment;
 	
 	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.user.name"));
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.driver.class.name"));
-		dataSource.setPassword(environment.getRequiredProperty("jdbc.url"));
-		
-		return dataSource;
-	}
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driver.class.name"));
+        dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
+        dataSource.setUsername(environment.getRequiredProperty("jdbc.user.name"));
+        dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
+
+        return dataSource;
+    }
 	
-	//metoda z konfiguracja hinernatea w ktorej rowniez przakazujemy informacje w ktorym pakiecie znajduja sie encje
-	@Bean
-	public EntityManagerFactory entityManagerFactory() {
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-		
-		Properties properties =  new Properties();
-		properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
-		properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
-		properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
-		properties.put("hibernate.generate_statistic", environment.getProperty("hibernate.generate_statistic"));
-		
-		//glowny obiekt fabryki beanow
-		LocalContainerEntityManagerFactoryBean factorybean = new LocalContainerEntityManagerFactoryBean();
-		factorybean.setPackagesToScan("com.example.model");
-		factorybean.setJpaVendorAdapter(vendorAdapter);
-		factorybean.setJpaProperties(properties);
-		factorybean.setDataSource(dataSource());
-		
-		//produkcja beanow encyjnych byla mozliwa dopiero gdy zostanie wykonana cala konfiguracja
-		factorybean.afterPropertiesSet();
-		
-		return factorybean.getObject();
-	}
+    //obiekt fabryki beanow encyjnych
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+
+        Properties properties = new Properties();
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
+        properties.put("hibernate.generate_statistic", environment.getProperty("hibernate.generate_statistic"));
+
+        //glowny obiekt fabryki beanow
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setPackagesToScan("com.klb.model");
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
+        factoryBean.setJpaProperties(properties);
+        factoryBean.setDataSource(dataSource());  //konfiguracja dost do bazy
+        factoryBean.afterPropertiesSet();  //produkcja beanow encyjnych bedzie mozliwa
+        //dopiero gdy wszystkie ustawienia zostana wykonane
+
+        return factoryBean.getObject();  //wzorzec - budowniczy ?
+    }
+
 	
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		JpaTransactionManager manager = new JpaTransactionManager();
-		manager.setEntityManagerFactory(entityManagerFactory());
-		
-		return manager;
-	}
+    //obiekt do obslugi transakcji
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory());
+        return transactionManager;
+    }
 }
