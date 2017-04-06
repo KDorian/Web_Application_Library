@@ -14,7 +14,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.ak.scheduler.AdvService;
+import com.example.scheduler.AdvService;
+
+
 
 @Configuration
 @ComponentScan(basePackages = "com.example")

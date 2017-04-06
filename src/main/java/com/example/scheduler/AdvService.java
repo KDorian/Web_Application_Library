@@ -10,6 +10,8 @@ import com.example.model.User;
 import com.example.service.EmailService;
 import com.example.service.UserService;
 
+
+
 /*Co jakis czas wysylac wiadomosc z reklama do wszystkich uzytkownikow (ktorzy maja konto)
  * 
  */
@@ -21,7 +23,7 @@ public class AdvService {
 	@Autowired
 	private EmailService emailService;
 	
-	private final static String FROM_EMAIL = "akbroh88@gmail.com";
+	private final static String FROM_EMAIL = "akbroh@gmail.com";
 	
 	@Scheduled(fixedDelay = 10000) 
 	public void sendEmails(){

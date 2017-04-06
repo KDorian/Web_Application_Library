@@ -32,7 +32,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 		charEnc.setForceEncoding(true);
 		servletContext.addFilter("charEnc", charEnc).addMappingForUrlPatterns(null, true, "/*");
 		
-		//TODO: dodanie deklaracji ze wszystkie beany sa zwiazane ze spring security
+		//deklaracja ze wszystkie beany sa zwiazane ze spring security
 		DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
 				
 				
