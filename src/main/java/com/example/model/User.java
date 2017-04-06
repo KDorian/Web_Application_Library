@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User extends BaseEntity{
 
 	public enum Role {
 		USER, ADMIN

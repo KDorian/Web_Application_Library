@@ -37,8 +37,10 @@ public class Rent extends BaseEntity{
 	@JoinColumn(name="book_id", nullable = false)
 	private Book book;
 	
-	public Rent() {
-		
+	public Rent(User user, Book book) {
+		super();
+		this.user = user;
+		this.book = book;
 	}
 
 	public Date getCreatedDate() {
